@@ -50,8 +50,24 @@ std::string Graph::averageEdgeNewickTree() {
 //** PRIVATE
 
 
-Edge Graph::edgeWithMinimumValue() {
-    return std::tuple<uint, uint, uint>();
+Edge Graph::coordinateToEdge(uint y, uint x) {
+    return std::make_tuple(0, 1, coordinateToDistance(0, 1));
+}
+
+Edge Graph::minEdge(Edge a, Edge b) {
+    // Compare just the value of the edge
+    return (std::get<2>(a) < std::get<2>(b)) ? a : b;
+}
+
+Edge Graph::edgeWithMinimumValue(Distances distances, uint verticesNumber) {
+    Edge minimumEdge = coordinateToEdge(0, 1);
+    for (uint i = 0; i < verticesNumber - 1; i++) {
+        for(uint j = i + 1; j < verticesNumber; j++) {
+            minimumEdge = minEdge(minimumEdge, coordinateToEdge(i, j));
+        }
+    }
+
+    return minimumEdge;
 }
 
 std::string Graph::newickTree(Distances distances, Index labelIndex, CompareFunc function) {

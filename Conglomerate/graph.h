@@ -16,7 +16,7 @@
 // f:Position -> Label
 typedef std::unordered_map<uint, std::string> Index;
 // (y, x, value)
-typedef std::tuple<uint, uint, uint> Edge;
+typedef std::tuple<uint, uint, Distance> Edge;
 
 // f:Distance, Distance -> Distance
 typedef std::function<Distance(Distance, Distance)> CompareFunc;
@@ -50,8 +50,9 @@ private:
 
     //** FUNCTIONS
 
-
-    Edge edgeWithMinimumValue();
+    Edge coordinateToEdge(uint x, uint y);
+    Edge minEdge(Edge a, Edge b);
+    Edge edgeWithMinimumValue(Distances distances, uint verticesNumber);
     std::string newickTree(Distances distances, Index labelIndex, CompareFunc function);
 
     Distance coordinateToDistance(uint x, uint y);
