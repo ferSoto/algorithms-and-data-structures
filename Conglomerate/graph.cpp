@@ -50,6 +50,17 @@ std::string Graph::averageEdgeNewickTree() {
 //** PRIVATE
 
 
+std::string Graph::newickTree(Distances distances, Index labelIndex, uint verticesNumber, CompareFunc compareFunc) {
+    while(verticesNumber > 1) {
+        auto minimumEdge = edgeWithMinimumValue(distances, verticesNumber);
+        merge(&distances, &labelIndex, minimumEdge, &verticesNumber, compareFunc);
+    }
+    return "(" + labelIndex[0] + ")";
+}
+
+void Graph::merge(Distances *distances, Index *labelIndex, Edge edge, uint *verticesNumber, CompareFunc compareFunc) {
+}
+
 Edge Graph::coordinateToEdge(uint y, uint x) {
     return std::make_tuple(0, 1, coordinateToDistance(0, 1));
 }
@@ -70,11 +81,6 @@ Edge Graph::edgeWithMinimumValue(Distances distances, uint verticesNumber) {
     return minimumEdge;
 }
 
-std::string Graph::newickTree(Distances distances, Index labelIndex, CompareFunc function) {
-
-    return std::string();
-}
-
 Distance Graph::coordinateToDistance(uint y, uint x) {
     return this->distances[y * this->verticesNumber + x];
 }
@@ -86,6 +92,13 @@ std::string Graph::coordinateToFormatedDistance(uint y, uint x) {
 std::string Graph::formatDistance(Distance distance) {
     // Positive integer numbers with format /^[0-9]{3}$/
     return ((distance < 10) ? "00" : (distance < 100) ? "0" : "") + std::to_string(distance);
+}
+
+std::string Graph::distanceToString(Distance distance) {
+    std::ostringstream stringStream;
+    stringStream << distance;
+
+    return stringStream.str();
 }
 
 
