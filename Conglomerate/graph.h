@@ -49,14 +49,15 @@ private:
     //** FUNCTIONS
 
 
-    std::string newickTree(Distances distances, Index labelIndex, uint verticesNumber, CompareFunc compareFunc);
+    std::string newickTree(CompareFunc compareFunc);
 
-    void merge(Distances *distances, Index *labelIndex, Edge edge, uint *verticesNumber, CompareFunc compareFunc);
+    void merge(Edge edge, CompareFunc compareFunc);
     Edge coordinateToEdge(uint x, uint y);
     Edge minEdge(Edge a, Edge b);
-    Edge edgeWithMinimumValue(Distances distances, uint verticesNumber);
+    Edge edgeWithMinimumValue();
 
     Distance coordinateToDistance(uint x, uint y);
+
     std::string coordinateToFormatedDistance(uint x, uint y);
     std::string formatDistance(Distance distance);
 
@@ -66,6 +67,7 @@ private:
 
     void printLabelIndex();
     void printMatrix();
+    void printEdge(Edge e);
 
 };
 

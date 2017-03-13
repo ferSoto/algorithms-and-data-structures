@@ -1,12 +1,10 @@
 #include <algorithm>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 
 #include "graph.h"
 
-
-Graph::Graph() {
-
-}
 
 Graph::Graph(Labels labels, Distances distances) {
     this->verticesNumber = labels.size();
@@ -29,19 +27,19 @@ Graph::~Graph() {
 
 
 std::string Graph::simpleEdgeNewickTree() {
-    return newickTree(this->distances, this->labelIndex, [](Distance a, Distance b) -> Distance {
+    return newickTree([](Distance a, Distance b) -> Distance {
         return std::min(a, b);
     });
 }
 
 std::string Graph::completeEdgeNewickTree() {
-    return newickTree(this->distances, this->labelIndex, [](Distance a, Distance b) -> Distance {
+    return newickTree([](Distance a, Distance b) -> Distance {
         return std::max(a, b);
     });
 }
 
 std::string Graph::averageEdgeNewickTree() {
-    return newickTree(this->distances, this->labelIndex, [](Distance a, Distance b) -> Distance {
+    return newickTree([](Distance a, Distance b) -> Distance {
         return (a + b) / 2;
     });
 }
@@ -50,19 +48,87 @@ std::string Graph::averageEdgeNewickTree() {
 //** PRIVATE
 
 
-std::string Graph::newickTree(Distances distances, Index labelIndex, uint verticesNumber, CompareFunc compareFunc) {
-    while(verticesNumber > 1) {
-        auto minimumEdge = edgeWithMinimumValue(distances, verticesNumber);
-        merge(&distances, &labelIndex, minimumEdge, &verticesNumber, compareFunc);
+std::string Graph::newickTree(CompareFunc compareFunc) {
+    Distances distancesBackup = this->distances;
+    Index labelIndexBackup = this->labelIndex;
+    uint verticesNumberBackup = this->verticesNumber;
+
+    while (this->verticesNumber > 1) {
+        auto minimumEdge = edgeWithMinimumValue();
+        merge(minimumEdge, compareFunc);
     }
-    return "(" + labelIndex[0] + ")";
+    std::string _newickTree = "(" + labelIndex[0] + ")";
+
+    // Reset class properties
+    this->distances = distancesBackup;
+    this->labelIndex = labelIndexBackup;
+    this->verticesNumber = verticesNumberBackup;
+
+    return _newickTree;
 }
 
-void Graph::merge(Distances *distances, Index *labelIndex, Edge edge, uint *verticesNumber, CompareFunc compareFunc) {
+void Graph::merge(Edge edge, CompareFunc compareFunc) {
+    // Get egde's components
+    Distance distance = std::get<2>(edge);
+    uint firstPosition = std::min(std::get<0>(edge), std::get<1>(edge));
+    uint secondPosition = std::max(std::get<0>(edge), std::get<1>(edge));
+
+    uint width = this->verticesNumber - 1;
+
+    // Update label index
+
+    // Create new label and set it on first position
+    std::string firstLabel = this->labelIndex.at(firstPosition);
+    std::string secondLabel = this->labelIndex.at(secondPosition);
+    std::string newLabel = "(" + firstLabel + ", " + secondLabel + "):" + distanceToString(distance);
+    this->labelIndex.at(firstPosition) = newLabel;
+
+    // Since all the position who change in the label index are the ones with a bigger index than
+    // the position of the second node, just update them
+    for (uint i = secondPosition; i < width; i++) {
+        this->labelIndex.at(i) = this->labelIndex.at(i + 1);
+    }
+    // The last position will not exists anymore, delete it
+    this->labelIndex.erase(width);
+
+    // Update adjacency matrix
+
+    // Create a new updated adjacency matrix
+    Distances newMatrix(width * width, 0);
+    for (uint i = 0; i < width - 1; i++) {
+        for (uint j = i + 1; j < width; j++) {
+            Distance distance;
+
+            if (i < firstPosition && j < firstPosition) {
+                // This positions of the matrix dont change
+                distance = coordinateToDistance(i, j);
+
+            } else {
+                uint x = (j < secondPosition) ? j : j + 1;
+
+                if (i == firstPosition) {
+                    Distance distance1 = coordinateToDistance(x, firstPosition);
+                    Distance distance2 = coordinateToDistance(x, secondPosition);
+                    distance = compareFunc(distance1, distance2);
+
+                } else {
+                    uint y = (i < secondPosition) ? i : i + 1;
+                    distance = coordinateToDistance(y, x);
+                }
+            }
+
+            newMatrix[i * width + j] = distance;
+            newMatrix[j * width + i] = distance;
+        }
+    }
+
+    // Replace adjacency matrix and update vertices number
+    this->verticesNumber--;
+    this->distances = newMatrix;
 }
 
 Edge Graph::coordinateToEdge(uint y, uint x) {
-    return std::make_tuple(0, 1, coordinateToDistance(0, 1));
+    return std::make_tuple(y, x, coordinateToDistance(y, x));
 }
 
 Edge Graph::minEdge(Edge a, Edge b) {
@@ -70,14 +136,13 @@ Edge Graph::minEdge(Edge a, Edge b) {
     return (std::get<2>(a) < std::get<2>(b)) ? a : b;
 }
 
-Edge Graph::edgeWithMinimumValue(Distances distances, uint verticesNumber) {
+Edge Graph::edgeWithMinimumValue() {
     Edge minimumEdge = coordinateToEdge(0, 1);
-    for (uint i = 0; i < verticesNumber - 1; i++) {
-        for(uint j = i + 1; j < verticesNumber; j++) {
+    for (uint i = 0; i < this->verticesNumber - 1; i++) {
+        for (uint j = i + 1; j < this->verticesNumber; j++) {
             minimumEdge = minEdge(minimumEdge, coordinateToEdge(i, j));
         }
     }
-
     return minimumEdge;
 }
 
@@ -96,8 +161,7 @@ std::string Graph::formatDistance(Distance distance) {
 
 std::string Graph::distanceToString(Distance distance) {
     std::ostringstream stringStream;
-    stringStream << distance;
-
+    stringStream << std::setfill('0') << std::setw(4) << distance;
     return stringStream.str();
 }
 
@@ -121,4 +185,10 @@ void Graph::printMatrix() {
         }
         std::cout << std::endl;
     }
+}
+
+void Graph::printEdge(Edge e) {
+    std::cout << "---------\n";
+    std::cout << std::get<0>(e) << " | " << std::get<1>(e) << " | " << std::get<2>(e) << std::endl;
+    std::cout << "---------\n\n";
 }
