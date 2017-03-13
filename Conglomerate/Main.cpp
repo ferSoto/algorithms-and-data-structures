@@ -16,7 +16,6 @@ int main() {
     * Then n lines with the tags/labels for each vertex (String)
     * Following by n^2 unsigned integers that represents the adjacency matrix
     **/
-
     uint verticesNumber;
     cin >> verticesNumber;
 
@@ -34,7 +33,15 @@ int main() {
     }
 
     Graph graph(labels, distances);
-
+    cout << "Simple link\n";
+    cout << graph.simpleEdgeNewickTree();
+    cout << endl << endl;
+    cout << "Complete link\n";
+    cout << graph.completeEdgeNewickTree();
+    cout << endl << endl;
+    cout << "Average link\n";
+    cout << graph.averageEdgeNewickTree();
+    cout << endl << endl;
 
     return 0;
 }
