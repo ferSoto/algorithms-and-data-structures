@@ -9,7 +9,7 @@
 Graph::Graph(Labels labels, Distances distances) {
     this->verticesNumber = labels.size();
 
-    // Create adjacency matriz
+    // Create adjacency matrix
     this->distances = distances;
 
     // Create label index
