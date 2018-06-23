@@ -4,7 +4,7 @@ Initially created for my Algorithms' class. Now, I hope it works as a place to p
 
 Currently, this repository contains the following algorithms:
 
-* Clustering
-* Find Triangles in a graph
-* Goldbach's conjeture
-* Kruskal
+* [Clustering](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/Conglomerate)
+* [Find Triangles in a graph](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/Triangles)
+* [Goldbach's conjeture](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/golback-conjeture)
+* [Kruskal](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/Kruskal)
