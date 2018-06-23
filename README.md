@@ -4,6 +4,7 @@ Initially created for my Algorithms' class. Now, I hope it works as a place to p
 
 Currently, this repository contains the following algorithms:
 
-* Kruskal
-* Find Triangles in a graph
 * Clustering
+* Find Triangles in a graph
+* Goldbach's conjeture
+* Kruskal
