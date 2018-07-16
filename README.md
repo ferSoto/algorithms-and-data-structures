@@ -1,6 +1,8 @@
 # Algorithms and data structures
 
-Initially created for my Algorithms' class. Now, I hope it works as a place to put any algorithm I had to learn.
+Initially created for my Algorithms' class.
+
+Now, it works as the place to put any algorithm I want to code, just for fun.
 
 Currently, this repository contains the following algorithms:
 
@@ -9,3 +11,4 @@ Currently, this repository contains the following algorithms:
 * [FizzBuzz](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/fizzbuzz)
 * [Goldbach's conjeture](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/goldback-conjeture)
 * [Kruskal](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/Kruskal)
+* [Matrix multiplication](https://github.com/ferSoto/algorithms-and-data-structures/tree/master/matrix-multiplication)
