@@ -12,4 +12,6 @@ Si num2<=num1 y num2<=num3 entonces num2 es el menor
 Si num3<= num1 y num3<=num2 entonces num3 es el menor
 ```
 
-Which is not wrong, but for someone gatekeeping, it's pretty bad. So I decided to give it a try and see how I'd solve it.
+Which is not wrong but, for someone gatekeeping it, it's pretty bad. So I decided to give it a try and see how I'd solve it.
+
+Don't be a gatekeeper, let people try and enjoy coding (and whatever they want to do).
