@@ -12,5 +12,7 @@ Currently, this repository contains the following algorithms:
 * [FizzBuzz](fizzbuzz)
 * [Goldbach's conjeture](goldback-conjeture)
 * [Kruskal](Kruskal)
+* [Leetcode: Two sum](two-sum)
 * [Matrix multiplication](matrix-multiplication)
 * [Mergesort](mergesort)
+* [Min & Max numbers](min-n-max-numbers-until-eof)
