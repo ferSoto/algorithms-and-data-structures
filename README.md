@@ -6,6 +6,7 @@ Now, it works as the place to put any algorithm I want to code, just for fun.
 
 Currently, this repository contains the following algorithms:
 
+* [Binary to Decimal](binary-to-decimal)
 * [Clustering](Conglomerate)
 * [Counting Islands](islands-dfs)
 * [Find Triangles in a graph](Triangles)
