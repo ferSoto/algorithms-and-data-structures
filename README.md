@@ -7,12 +7,12 @@ Now, it works as the place to put any algorithm I want to code, just for fun.
 Currently, this repository contains the following algorithms:
 
 * [Binary to Decimal](binary-to-decimal)
-* [Clustering](Conglomerate)
+* [Clustering](conglomerate)
 * [Counting Islands](islands-dfs)
-* [Find Triangles in a graph](Triangles)
+* [Find Triangles in a graph](triangles)
 * [FizzBuzz](fizzbuzz)
 * [Goldbach's conjeture](goldback-conjeture)
-* [Kruskal](Kruskal)
+* [Kruskal](kruskal)
 * [Leetcode 1: Two sum](leetcode-1-two-sum)
 * [Leetcode 2: Add two numbers](leetcode-2-add-two-numbers)
 * [Matrix multiplication](matrix-multiplication)
